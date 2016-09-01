@@ -48,7 +48,7 @@ tabsize=2, % Number of spaces per tab in the code
 \maketitle
 
 \section{Aim of this workshop}
-The aim of this workshop is to give you a better understanding of Linx, the kernel and the typical BIOS boot process for x86 and x86\_64 computers.
+The aim of this workshop is to give you a better understanding of Linux, the kernel and the typical BIOS boot process for x86 and x86\_64 computers.
 
 We cover extensions to this workshop at the end to enhance our linux image to allow us to additionally boot EFI mode computers. This is useful with newer machines which may not support older BIOS boot.
 
@@ -66,7 +66,7 @@ This is an intermediate level workshop and NOT designed for beginners. People wh
 
 For this workshop I will be assuming at a minimum, a bash like interface to the CLI and installation of the build-essential tools and grub. We will be using tools such as Make and GCC to compile both Linux kernel and busybox for inclusion in our initrd. Additionally, grub will be required to make our image bootable.
 
-When you have all required packages, you can generate yourself a folder ~/build. We will refer to this folder throughout this tutorial as \$BUILD
+When you have all required packages, you can generate yourself a folder \~/build. We will refer to this folder throughout this tutorial as \$BUILD
 
 \section{Compiling the Linux Kernel}
 
@@ -91,7 +91,7 @@ Once this has completed we have our new Linux kernel compiled here: arch/x86/boo
 
 \section{Compiling busybox}
 
-Busybox is an essential component in any small linux distro or pre-boot environment. Busybox is a collection of core components from the GNU toolchain linked into a single binary totalling only ~500KB. Busybox achieves its tiny footprint by statically linking all libraries required into a single executable binary and implementing a subset of the optional arguments of core programs. This is a design concept which is slightly at odds with the core linux design methodology of modularity however the choices taken have been made to minimize filesize for a very specific use case. Interestingly to call a core tool such as ls, we pass the ls argument to the busybox executable and busybox interprets the command argument list as an arg list for requested executable. Thus we can generate symlinks to the busybox executable to populate our bin directory within our linux system.
+Busybox is an essential component in any small linux distro or pre-boot environment. Busybox is a collection of core components from the GNU toolchain linked into a single binary totalling only \~500KB. Busybox achieves its tiny footprint by statically linking all libraries required into a single executable binary and implementing a subset of the optional arguments of core programs. This is a design concept which is slightly at odds with the core linux design methodology of modularity however the choices taken have been made to minimize filesize for a very specific use case. Interestingly to call a core tool such as ls, we pass the ls argument to the busybox executable and busybox interprets the command argument list as an arg list for requested executable. Thus we can generate symlinks to the busybox executable to populate our bin directory within our linux system.
 
 We're going to move back to the \$BUILD folder to download the latest version of busybox. Head on over to \url{https://busybox.net/downloads/} and download the latest version. For the purposes of this document we will download busybox-1.25.0.tar.bz2
 \begin{lstlisting}
@@ -163,6 +163,7 @@ ln busybox ls
 \end{lstlisting}
 We can do this for other useful executables. You can find the full list at \url{https://busybox.net/downloads/BusyBox.html} under the commands section. Lets generate some useful commands:
 \begin{lstlisting}
+ln busybox ash
 ln busybox cat
 ln busybox chmod
 ln busybox chown
@@ -277,7 +278,7 @@ initrd /initrd.cpio.gz
 boot
 \end{lstlisting}
 
-You should now see some scrolling text and the linus system should boot up. eventually you'll be dropped to an ash command prompt from where you can execute your linked commands. Give it a go by executing
+You should now see some scrolling text and the linux system should boot up. eventually you'll be dropped to an ash command prompt from where you can execute your linked commands. Give it a go by executing
 \begin{lstlisting}
 echo Hello World
 \end{lstlisting}
